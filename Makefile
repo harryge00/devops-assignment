@@ -17,6 +17,7 @@ build-countries-assembly:
 
 build-all: build-airports-assembly build-airports-assembly-new build-countries-assembly
 	# build all the 3 images
+
 run: 
 	echo "Create 2 networks"
 	docker network create airports
@@ -30,11 +31,17 @@ run:
 
 clean:
 	echo "Stopping and removing containers"
-	-docker stop reverse-proxy airports countries
-	-docker rm reverse-proxy airports countries
+	-docker stop reverse-proxy airports countries airports2
+	-docker rm reverse-proxy airports countries airports2
 	-docker network rm airports countries
+	-sed -i "s/airports2:8080/airports:8080/g" nginx.conf
 
 run-jar-for-test:
 	# Run the two jar in containers
 	docker run -d --name=airports-test -p 8001:8080 airports-assembly:$(VERSION)
 	docker run -d --name=countries-test -p 8002:8080 countries-assembly:$(VERSION)
+
+upgrade-airports:
+	docker run -d --net=airports --name=airports2  airports-assembly:$(REVIEW_VERSION)
+	sed -i "s/airports:8080/airports2:8080/g" nginx.conf
+	docker exec reverse-proxy nginx -s reload
