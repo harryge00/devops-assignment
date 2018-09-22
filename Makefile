@@ -1,4 +1,4 @@
-all: build-all
+all: build-all run
 
 VERSION?=1.0.1
 REVIEW_VERSION?=1.1.0
