@@ -1,5 +1,5 @@
 #!/bin/bash
-curl localhost:8000/airports/health/live
-curl localhost:8000/airports/health/ready
-curl localhost:8000/countries/health/live
-curl localhost:8000/countries/health/ready
+curl localhost:8001/health/live
+curl localhost:8001/airports/NL
+curl localhost:8002/health/live
+curl localhost:8002/countries/Netherlands

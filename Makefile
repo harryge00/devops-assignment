@@ -33,3 +33,8 @@ clean:
 	-docker stop reverse-proxy airports countries
 	-docker rm reverse-proxy airports countries
 	-docker network rm airports countries
+
+run-jar-for-test:
+	# Run the two jar in containers
+	docker run -d --name=airports-test -p 8001:8080 airports-assembly:$(VERSION)
+	docker run -d --name=countries-test -p 8002:8080 countries-assembly:$(VERSION)
