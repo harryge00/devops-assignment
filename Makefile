@@ -24,7 +24,7 @@ run:
 	echo "Run containers"	
 	docker run -d --net=airports --name=airports  airports-assembly:$(VERSION)
 	docker run -d --net=countries --name=countries countries-assembly:$(VERSION)
-	docker create -it --net=airports -v ${PWD}/nginx.conf:/etc/nginx/nginx.conf -p 8000:80 --name reverse-proxy nginx
+	docker create -it --net=airports -v ${PWD}/nginx.conf:/etc/nginx/nginx.conf -p 8000:8000 --name reverse-proxy nginx
 	docker network connect countries reverse-proxy
 	docker start reverse-proxy
 
